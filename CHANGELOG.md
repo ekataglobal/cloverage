@@ -12,6 +12,12 @@ in github. Commentary on the change should appear as a nested, unordered list. -
 - Add babashka compatibility
 - Migrate tools.cli from deprecated `cli/cli` to `cli/parse-opts`
 - Bump riddley 0.2.0 → 0.2.2
+- Fix instrumentation causing reflection warnings that uninstrumented code doesn't emit
+  - Convert `Class` tags on vars to symbols, which is what the compiler reads
+  - Propagate return type hints on arglists, e.g. `(defn f ^String [x] ...)`
+  - Instrument Clojure 1.12 static method calls `(Class/method ...)` as `(. Class method ...)`
+  - Keep type hints and line numbers on `.` forms
+  - Don't leak `*warn-on-reflection*` and `*unchecked-math*` between instrumented namespaces
 
 ## 1.2.5
 
